@@ -1,9 +1,7 @@
 package com.projeto.jogoszerados.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -13,7 +11,7 @@ public class Zerado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer zeradoId;
     private String nome;
     private String console;
     private String dificuldade;
@@ -23,8 +21,18 @@ public class Zerado {
     private String avaliacao;
     private String genero;
 
-    public Integer getId() {
-        return id;
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    @JsonIgnore
+    public User user = new User();
+
+
+    public Integer getZeradoId() {
+        return zeradoId;
+    }
+
+    public void setZeradoId(Integer zeradoId) {
+        this.zeradoId = zeradoId;
     }
 
     public String getNome() {
@@ -89,5 +97,13 @@ public class Zerado {
 
     public void setGenero(String genero) {
         this.genero = genero;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

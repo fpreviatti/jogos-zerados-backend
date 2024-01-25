@@ -17,9 +17,9 @@ public class ZeradoController {
     @Autowired
     ZeradoService zeradoService;
 
-    @GetMapping(value = "/zerados")
-    public ResponseEntity<List<Zerado>> findAll(){
-        List<Zerado> zerados = zeradoService.findAll();
+    @GetMapping(value = "/zerados/{id}")
+    public ResponseEntity<List<Zerado>> findZeradosByIdUsuario(@PathVariable Long id){
+        List<Zerado> zerados = zeradoService.findZeradosByIdUsuario(id);
         return ResponseEntity.ok().body(zerados);
     }
 
@@ -29,12 +29,12 @@ public class ZeradoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(value = "/zerados")
-    public ResponseEntity<Zerado> save(@RequestBody Zerado zerado){
-        Zerado zeradoSaved = zeradoService.save(zerado);
+    @PostMapping(value = "/zerados/{id}")
+    public ResponseEntity<Zerado> save(@RequestBody Zerado zerado, @PathVariable Long id){
+        Zerado zeradoSaved = zeradoService.save(zerado, id);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/zerados/{id}")
-                .buildAndExpand(zeradoSaved.getId()).toUri();
+                .buildAndExpand(zeradoSaved.getZeradoId()).toUri();
 
         return ResponseEntity.created(uri).body(zeradoSaved);
     }
