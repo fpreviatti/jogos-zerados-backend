@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Zerado {
@@ -20,6 +22,8 @@ public class Zerado {
     private Integer minutosJogados;
     private String avaliacao;
     private String genero;
+
+    private String urlImagemZeramento;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
@@ -99,6 +103,14 @@ public class Zerado {
         this.genero = genero;
     }
 
+    public String getUrlImagemZeramento() {
+        return urlImagemZeramento;
+    }
+
+    public void setUrlImagemZeramento(String urlImagemZeramento) {
+        this.urlImagemZeramento = urlImagemZeramento;
+    }
+
     public User getUser() {
         return user;
     }
@@ -106,4 +118,8 @@ public class Zerado {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @OneToMany(mappedBy = "zerado")
+    private List<Imagem> imagens = new ArrayList<>();
+
 }
